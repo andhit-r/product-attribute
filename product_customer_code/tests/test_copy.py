@@ -12,5 +12,8 @@ class ProductCaseCopy(TransactionCase):
         self.prod = self.env.ref('product.product_product_5')
 
     def test_copy(self):
-        prod_copy = self.prod.copy()
+        prod_copy = self.prod.copy(
+            default={
+                "default_code": self.prod.default_code + '-01',
+                })
         self.assertFalse(prod_copy.product_customer_code_ids)
