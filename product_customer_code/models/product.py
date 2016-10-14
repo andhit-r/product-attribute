@@ -2,7 +2,7 @@
 # © 2014 Acsone SA/NV (http://www.acsone.eu)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models
+from openerp import fields, models
 
 
 class ProductProduct(models.Model):
@@ -11,16 +11,9 @@ class ProductProduct(models.Model):
     product_customer_code_ids = fields.One2many(
         string='Customer Codes',
         comodel_name='product.customer.code',
-        inverse_name='product_id'
+        inverse_name='product_id',
+        copy=False,
     )
-
-    @api.multi
-    def copy(self, default=None):
-        if not default:
-            default = {}
-        default['product_customer_code_ids'] = False
-        return super(ProductProduct, self.with_context(copy=True))\
-            .copy(default)
 
     def name_search(self, cr, user, name='', args=None, operator='ilike',
                     context=None, limit=80):
